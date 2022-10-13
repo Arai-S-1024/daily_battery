@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<nav class="navbar navbar-light bg-warning">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            タスク登録
+        </a>
+    </div>
+</nav>
+<!-- <h3>タスク入力</h3> -->
+<!-- 新規タスク登録 -->
+<header class="m-5 bg-light" >
+    <h2>新規タスク</h2>
+    <form class="m-5" action="/create/task" method="POST" style="width: 400px;">
+        <div class="form-group pb-3">
+            <label for="task_name">タスク名 : </label>
+            <input type="text" class="form-control" name="task_name" aria-describedby="name-help">
+        </div>
+        <div class="form-group pb-3">
+            <label for="cost">消費PB : </label>
+            <input type="number" class="form-control" name="cost" aria-describedby="cost-help">
+        </div>
+        <!-- <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="is_favorite">
+            <label class="form-check-label" for="is_favorite">
+              お気に入り登録
+            </label>
+        </div>
+        <div class="form-group pb-3">
+            <label for="create_at">Due : </label>
+            <input type="date" name="create_at" required>
+        </div> -->
+        <button type="submit" class="btn btn-primary">Create</button>
+        
+    </form>
+</header>
+
+<!-- <div class="form">
+    <form action="/create/task" method="POST">
+        <label for="task_name">タスク名</label>
+        <input type="text" name="task_name">
+        <label for="cost">消費バッテリー</label>
+        <input type="number" name="cost">
+        <input type="submit" value="登録する">
+    </form>
+</div> -->
+<!-- <p>{{current_user_id}}</p> -->
+
+<header class="m-5 bg-light">
+    <h2>タスクのリスト</h2>
+    {% for task in task_list %}
+    <!-- {% if task.user_id == current_user_id %} -->
+        <div class="card">
+            <div class="row justify-content-center align-items-center">
+                <div class="col-5">
+                    <div class="card-body">
+                        <h2 class="card-title">{{ task.name }}</h2>
+                        <p>{{task.created_at.date()}}</p>
+                        <p>消費バッテリー：{{task.cost}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <!-- {% endif %} -->
+    {% endfor %}
+</header>
+{% endblock %}

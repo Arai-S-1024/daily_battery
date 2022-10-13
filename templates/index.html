@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+{% block body %}
+{% if current_user_id == 0 %}
+<section class="bg-light text-dark p-5 text-center">
+    <div class="container">
+        <h2>ユーザー登録をしてください!</h2>
+        <a class="btn btn-secondary btn-lg" href="/create/user" role="button">登録はこちらから</a>
+    </div>    
+</section>
+{% else %}
+    <div class="container">
+        <h1>ユーザーの情報</h1>
+        {% for user in user_data %}
+            {% if user.id == current_user_id  %}
+            <table class="table table-bordered table-sm table-striped">
+                <tr>
+                    <th>ユーザー名</th>
+                    <th>{{ user.name }}</th>
+                </tr>
+                <tr>
+                    <th>年齢</th>
+                    <th>{{user.age}}</th>
+                </tr>
+                <tr>
+                    <th>バッテリー</th>
+                    <th>{{user.current_battery}} %</th>
+                </tr>
+            </table>
+        </div>
+            {% if user.current_battery > 75 %}
+            <div class="container">
+                <div class="progress" style="height: 150px;">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" style="width: {{ user.current_battery }}%" >
+                    <!-- {{ user.current_battery }}% -->
+                    </div>
+             </div>
+             
+
+             {% elif user.current_battery > 50 %}
+            <div class="container">
+                <div class="progress" style="height: 150px;">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-info" style="width: {{ user.current_battery }}%" >
+                    <!-- {{ user.current_battery }}% -->
+                    </div>
+                </div>
+             {% elif user.current_battery > 25 %}
+            <div class="container">
+                <div class="progress" style="height: 150px;">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" style="width: {{ user.current_battery }}%" >
+                    <!-- {{ user.current_battery }}% -->
+                    </div>
+             </div>
+             
+
+             {% else %}
+            <div class="container">
+                <div class="progress" style="height: 150px;">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" style="width: {{ user.current_battery }}%" >
+                    <!-- {{ user.current_battery }}% -->
+                    </div>
+             </div>
+             {% endif %}
+             
+             <a class="btn btn-secondary btn-lg " href="/recharge/battery"role="button">10%回復</a>
+             <a class="btn btn-primary btn-lg " href="/fullcharge/battery"role="button">MAX回復</a>
+             
+        {% endif %}
+    {% endfor %}
+    <!-- <h1>current user: {{current_user_id}}</h1> -->
+
+    <h1>ToDo</h1>
+        {% for task in task_list %}
+            {% if task.is_completed == False %}
+                {% if task.user_id == current_user_id  %}
+                    <div class="card">
+                        <div class="row justify-content-center align-items-center">
+                            <div class="col-5">
+                                <div class="card-body">
+                                    <h2 class="card-title">{{ task.name }}</h2>
+                                    <p>{{task.created_at.date()}}</p>
+                                    <p>消費バッテリー：{{task.cost}}</p>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <a class="btn btn-secondary btn-lg" href="/complete/{{task.id}}" role="button">完了</a>
+                                <a class="btn btn-success btn-lg" href="" role="button">編集</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    <a class="btn btn-warning btn-lg" href="/create/task" role="button">タスク登録</a>
+    <a class="btn btn-info btn-lg" href="/past_data" role="button">過去の記録</a>
+{% endif %}
+{% endblock%}

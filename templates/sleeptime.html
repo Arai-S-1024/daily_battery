@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<nav class="navbar navbar-light" style="background-color:#e3f2fd;">
+    <a class="navbar-brand pl-3" href="/" style="font-size: 2rem;">Life Battery</a>
+</nav>
+
+<h2 class="m-5">睡眠時間登録</h2>
+<!-- 絶対POSTだけどcreateからの送信と見分ける方法分からずGETにしました -->
+<form class="m-5" action="/" method='POST'>
+    <div class="form-group pb-3">
+        <label for="sleeptime">睡眠時間: </label>
+        <input type="time" name="sleeptime" required>
+    </div>
+    <a class="btn btn-outline-primary" href="/" role="button">Return</a>
+    <button type="submit" class="btn btn-primary">登録</button>
+</form>
+{% endblock %}
